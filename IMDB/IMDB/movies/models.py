@@ -9,7 +9,7 @@ class Movies(models.Model):
 	imdb_score = models.FloatField()
   	director = models.CharField(max_length = 100)
   	popularity = models.FloatField()
-  	genre = models.ManyToManyField(Genre,related_name="genre")
+  	genre = models.ManyToManyField(Genre)
 
   	class meta:
   		ordering = ['name']
