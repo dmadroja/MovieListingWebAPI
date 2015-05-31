@@ -1,16 +1,16 @@
 from django.db import models
 
 # Create your models here.
+class Genre(models.Model):
+	genre = models.CharField(max_length=50)
 
 class Movies(models.Model):
 	name = models.CharField(max_length=200)
-	imdb_score = models.DecimalFields(max_digits=3, decimal_places=1)
+	imdb_score = models.FloatField()
   	director = models.CharField(max_length = 100)
-  	pupularity = models.DecimalFields(max_digits=4, decimal_places=1)
-  	genere = models.ManytoManyField(Genere, related_name="genere")
+  	popularity = models.FloatField()
+  	genre = models.ManyToManyField(Genre)
 
   	class meta:
-  		ordering('name')
+  		ordering = ['name']
 
-class Genere(models.Model):
-	genere = models.ManyToManyField(Movies, related_name="genere")

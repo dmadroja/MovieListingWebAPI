@@ -4,21 +4,21 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from movies.models import Movies
-from movies.serializers import MoviesSerializer
+from models import Movies
+from serializers import MoviesSerializer
 
-@api_view([GET],[POST])
+@api_view(['GET','POST'])
 def movies_list(request):
-	if request.method == 'POST' && request.META[HTTP_AUTHORIZATION] == '':
+	if request.method == 'POST':
 		serializer = MoviesSerializer(data = request.data)
-		if serializer.isValid:
+		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		else:
 			 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 	elif request.method == 'GET':
 		movies = Movies.objects.all()
-        serializer = MoviesSerializer(snippets, many=True)
+        serializer = MoviesSerializer(movies, many=True)
         return Response(serializer.data)
 
 
