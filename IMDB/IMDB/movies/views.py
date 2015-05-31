@@ -5,8 +5,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from models import Movies
-from serializers import MoviesSerializer
-
+from serializers import MoviesSerializer,GenreSerializer
+import pdb
 @api_view(['GET','POST'])
 def movies_list(request):
 	if request.method == 'POST':
@@ -22,5 +22,11 @@ def movies_list(request):
         return Response(serializer.data)
 
 
-#@api_view([GET])
-#def movies_search_list(request):
+@api_view(['POST'])
+def genre_add(request):
+	serializer = GenreSerializer(data = request.data)
+	if serializer.is_valid():
+		serializer.save()
+		return Response(serializer.data, status=status.HTTP_201_CREATED)
+	else:
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

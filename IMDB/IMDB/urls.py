@@ -21,4 +21,5 @@ from movies import views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^movies', views.movies_list),
+    url(r'^genrers', views.genre_add),
 ]
