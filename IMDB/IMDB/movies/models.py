@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Genre(models.Model):
-	genre = models.CharField(max_length=50)
+	genre = models.CharField(max_length=50, unique= True)
 
 class Movies(models.Model):
 	name = models.CharField(max_length=200)
