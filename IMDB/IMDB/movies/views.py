@@ -14,8 +14,9 @@ import pdb
 """
 	View for List, search, add, edit and delete movies
 """
-@permission_classes((IsAuthenticatedOrReadOnly,))
+
 @api_view(['GET','POST','PUT','DELETE'])
+@permission_classes((IsAuthenticatedOrReadOnly,))
 def movies_list(request, queryPara =None):
 	#pdb.set_trace()
 	if request.method == 'POST':
@@ -39,7 +40,7 @@ def movies_list(request, queryPara =None):
 
 	elif request.method == 'DELETE':
 		Movies.objects.get(id=int(queryPara)).delete()
-		return Response(request.data, status=status.HTTP_200_OK)
+		return Response({'Record deleted...'}, status=status.HTTP_200_OK)
 
 	elif request.method == 'GET':
 		#pdb.set_trace()
@@ -51,7 +52,7 @@ def movies_list(request, queryPara =None):
 		serializer = MoviesSerializer(movies, many=True)
 		return Response(serializer.data)
 	return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
-	
+
 """
 	View for adding new genre if required
 """
