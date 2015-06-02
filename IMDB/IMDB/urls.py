@@ -21,5 +21,5 @@ from movies import views
 urlpatterns = [
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^movies/(?P<queryPara>\w+|)?/?$', views.movies_list),#url for all movie related actions
-    url(r'^genrers', views.genre_add), #url for adding and listing genres
+    url(r'^genres', views.genre_add), #url for adding and listing genres
 ]
