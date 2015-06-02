@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 # Application definition
 
 INSTALLED_APPS = (
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'IMDB.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'IMDBMOVIES',
+        'NAME': os.path.join(PROJECT_ROOT, 'IMDBMOVIES'),
          'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
@@ -117,7 +117,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT,'static')
 STATICFILES_DIRS = (
