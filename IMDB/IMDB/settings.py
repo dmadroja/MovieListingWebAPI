@@ -25,7 +25,7 @@ SECRET_KEY = '$q^5+tt+qij+-wc8rsmc$4m$1+uku6)!d@l=^a9$h2zz6r3h31'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'IMDB.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'IMDB',
+        'NAME': 'IMDBMOVIES',
          'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
@@ -100,7 +100,6 @@ DATABASES = {
         
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -125,4 +124,5 @@ STATICFILES_DIRS = (
 os.path.join(PROJECT_ROOT, 'static'),
 )
 #STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 
