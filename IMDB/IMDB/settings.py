@@ -93,10 +93,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'IMDB',
-        'USER': 'root',
+         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '',
+        
     }
 }
 
@@ -117,7 +118,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(PROJECT_ROOT,'static')
+STATICFILES_DIRS = (
+os.path.join(PROJECT_ROOT, 'static'),
+)
+#STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
