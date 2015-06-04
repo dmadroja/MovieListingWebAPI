@@ -36,10 +36,9 @@ def movies_operations(request, queryPara =None):
 			 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 	elif request.method == 'DELETE' and request.user.is_superuser:
-		fetchRecords =Movies.objects.get(id=int(queryPara))
 		Movies.objects.get(id=int(queryPara)).delete()
 		return Response(status=status.HTTP_200_OK)
-		
+
 	elif request.method == 'GET':
 	
 		if queryPara is None or queryPara == '':
