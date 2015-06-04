@@ -8,8 +8,6 @@ from models import Movies, Genre
 from serializers import MoviesSerializer,GenreSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.decorators import permission_classes
-import base64
-import pdb
 
 """
 	View for List, search, add, edit and delete movies
@@ -17,47 +15,47 @@ import pdb
 
 @api_view(['GET','POST','PUT','DELETE'])
 @permission_classes((IsAuthenticatedOrReadOnly,))
-def movies_list(request, queryPara =None):
-	#pdb.set_trace()
-	if request.method == 'POST':
-		serializerPost = MoviesSerializer(data = request.data, partial=True)
+def movies_operations(request, queryPara =None):
+	
+	if request.method == 'POST' and request.user.is_superuser:
+		serializer = MoviesSerializer(data = request.data, partial=True)
 
-		if serializerPost.is_valid():
-			#pdb.set_trace()
-			serializerPost.save()
-			return Response(serializerPost.data, status=status.HTTP_201_CREATED)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		else:
-			 return Response(serializerPost.errors, status=status.HTTP_400_BAD_REQUEST)
+			 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-	elif request.method == 'PUT':
-		serializerPut = MoviesSerializer(Movies.objects.get(id=request.data['id']),data = request.data, partial=True)
+	elif request.method == 'PUT' and request.user.is_superuser:
+		serializer = MoviesSerializer(Movies.objects.get(id=request.data['id']),data = request.data, partial=True)
 
-		if serializerPut.is_valid():
-			serializerPut.save()
-			return Response(serializerPut.data, status=status.HTTP_201_CREATED)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=status.HTTP_201_CREATED)
 		else:
-			 return Response(serializerPut.errors, status=status.HTTP_400_BAD_REQUEST)
+			 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-	elif request.method == 'DELETE':
+	elif request.method == 'DELETE' and request.user.is_superuser:
+		fetchRecords =Movies.objects.get(id=int(queryPara))
 		Movies.objects.get(id=int(queryPara)).delete()
-		return Response({'Record deleted...'}, status=status.HTTP_200_OK)
-
+		return Response(status=status.HTTP_200_OK)
+		
 	elif request.method == 'GET':
-		#pdb.set_trace()
+	
 		if queryPara is None or queryPara == '':
 			movies = Movies.objects.all()
 
 		if queryPara is not None and queryPara != '':
 			movies = Movies.objects.filter(name__icontains= queryPara)
 		serializer = MoviesSerializer(movies, many=True)
-		return Response(serializer.data)
+		return Response(serializer.data,status=status.HTTP_200_OK)
 	return Response(request.data, status=status.HTTP_400_BAD_REQUEST)
 
 """
-	View for adding new genre if required
+	View for adding new genre if required and to list all the genre
 """
 @api_view(['POST','GET'])
-def genre_add(request):
+def genre_operations(request):
 
 	if request.method == 'POST':
 		serializer = GenreSerializer(data = request.data)
@@ -71,5 +69,5 @@ def genre_add(request):
 	elif request.method == 'GET':
 		genre = Genre.objects.all()
 		serializer = GenreSerializer(genre, many=True)
-       	return Response(serializer.data)
+       	return Response(serializer.data,status=status.HTTP_200_OK)
 
